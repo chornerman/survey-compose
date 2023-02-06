@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="co.nimblehq.template.compose">
+    package="co.nimblehq.chorn.survey">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name="co.nimblehq.template.compose.ui.screens.MainActivity" android:exported="true">
+        <activity android:name="co.nimblehq.chorn.survey.ui.screens.MainActivity" android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

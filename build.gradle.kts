@@ -99,8 +99,8 @@ koverMerged {
         "com.bumptech.glide.*",
         "dagger.hilt.internal.*",
         "hilt_aggregated_deps.*",
-        "co.nimblehq.template.compose.databinding.*",
-        "co.nimblehq.template.compose.di.*"
+        "co.nimblehq.chorn.survey.databinding.*",
+        "co.nimblehq.chorn.survey.di.*"
     )
 
     val excludedFiles = generatedFiles + excludedPackages

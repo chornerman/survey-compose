@@ -32,7 +32,7 @@ android {
 
     compileSdk = Versions.ANDROID_COMPILE_SDK_VERSION
     defaultConfig {
-        applicationId = "co.nimblehq.template.compose"
+        applicationId = "co.nimblehq.chorn.survey"
         minSdk = Versions.ANDROID_MIN_SDK_VERSION
         targetSdk = Versions.ANDROID_TARGET_SDK_VERSION
         versionCode = Versions.ANDROID_VERSION_CODE
