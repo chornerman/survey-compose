@@ -47,14 +47,12 @@ android {
             isShrinkResources = true
             proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
             signingConfig = signingConfigs[BuildType.RELEASE]
-            buildConfigField("String", "BASE_API_URL", "\"https://jsonplaceholder.typicode.com/\"")
         }
 
         getByName(BuildType.DEBUG) {
             // For quickly testing build with proguard, enable this
             isMinifyEnabled = false
             signingConfig = signingConfigs[BuildType.DEBUG]
-            buildConfigField("String", "BASE_API_URL", "\"https://jsonplaceholder.typicode.com/\"")
         }
     }
 
@@ -62,9 +60,26 @@ android {
     productFlavors {
         create(Flavor.STAGING) {
             applicationIdSuffix = ".staging"
+            buildConfigField(
+                "String", "BASE_API_URL", "\"https://nimble-survey-web-staging.herokuapp.com\""
+            )
+            buildConfigField(
+                "String", "CLIENT_ID", "\"z9iUamZLvRgtVVtRJ8UqItg2vmncGyEi30p1eWEddnA\""
+            )
+            buildConfigField(
+                "String", "CLIENT_SECRET", "\"1vqRNMxq-Yx83A61GNjLb17qxCGKxHDb8EmB3MKdxqA\""
+            )
         }
 
-        create(Flavor.PRODUCTION) {}
+        create(Flavor.PRODUCTION) {
+            buildConfigField("String", "BASE_API_URL", "\"https://survey-api.nimblehq.co\"")
+            buildConfigField(
+                "String", "CLIENT_ID", "\"4gg3bokkvPnMxWz7HHTdM_wf1RNg9k8iA6sZ2ZrA7EA\""
+            )
+            buildConfigField(
+                "String", "CLIENT_SECRET", "\"y_GgV-GEjWd3VTzbZBS6tqEco0E68QuqHQv0QND2vKo\""
+            )
+        }
     }
 
     sourceSets["test"].resources {

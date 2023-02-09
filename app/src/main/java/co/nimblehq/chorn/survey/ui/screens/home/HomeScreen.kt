@@ -9,29 +9,23 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import co.nimblehq.chorn.survey.R
-import co.nimblehq.chorn.survey.model.UiModel
 import co.nimblehq.chorn.survey.ui.AppDestination
 import co.nimblehq.chorn.survey.ui.theme.AppTheme.dimensions
 import co.nimblehq.chorn.survey.ui.theme.ComposeTheme
-import timber.log.Timber
 
 @Composable
 fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel(),
     navigator: (destination: AppDestination) -> Unit
 ) {
-    val uiModels: List<UiModel> by viewModel.uiModels.collectAsState()
-
     HomeScreenContent(
-        title = stringResource(id = R.string.app_name),
-        uiModels = uiModels
+        title = stringResource(id = R.string.app_name)
     )
 }
 
 @Composable
 private fun HomeScreenContent(
-    title: String,
-    uiModels: List<UiModel>
+    title: String
 ) {
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -45,7 +39,6 @@ private fun HomeScreenContent(
                 .padding(all = dimensions.spacingNormal)
         )
     }
-    Timber.d("Result : $uiModels")
 }
 
 @Preview(showSystemUi = true)
@@ -53,8 +46,7 @@ private fun HomeScreenContent(
 private fun HomeScreenPreview() {
     ComposeTheme {
         HomeScreenContent(
-            title = stringResource(id = R.string.app_name),
-            uiModels = listOf(UiModel(1), UiModel(2), UiModel(3))
+            title = stringResource(id = R.string.app_name)
         )
     }
 }

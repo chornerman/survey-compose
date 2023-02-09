@@ -1,7 +1,6 @@
 package co.nimblehq.chorn.survey.data.extensions
 
-import co.nimblehq.chorn.survey.data.response.ErrorResponse
-import co.nimblehq.chorn.survey.data.response.toModel
+import co.nimblehq.chorn.survey.data.response.*
 import co.nimblehq.chorn.survey.data.service.providers.MoshiBuilderProvider
 import co.nimblehq.chorn.survey.domain.exceptions.ApiException
 import co.nimblehq.chorn.survey.domain.exceptions.NoConnectivityException
@@ -31,22 +30,21 @@ private fun Throwable.mapError(): Throwable {
         is UnknownHostException,
         is InterruptedIOException -> NoConnectivityException
         is HttpException -> {
-            val errorResponse = parseErrorResponse(response())
+            val baseErrorResponse = parseBaseErrorResponse(response())
             ApiException(
-                errorResponse?.toModel(),
-                code(),
-                message()
+                baseErrorResponse?.toError(),
+                code()
             )
         }
         else -> this
     }
 }
 
-private fun parseErrorResponse(response: Response<*>?): ErrorResponse? {
+private fun parseBaseErrorResponse(response: Response<*>?): BaseErrorResponse? {
     val jsonString = response?.errorBody()?.string()
     return try {
         val moshi = MoshiBuilderProvider.moshiBuilder.build()
-        val adapter = moshi.adapter(ErrorResponse::class.java)
+        val adapter = moshi.adapter(BaseErrorResponse::class.java)
         adapter.fromJson(jsonString.orEmpty())
     } catch (exception: IOException) {
         null

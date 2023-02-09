@@ -4,9 +4,9 @@ import android.content.SharedPreferences
 
 abstract class BaseSharedPreferences {
 
-    protected lateinit var sharedPreferences: SharedPreferences
+    lateinit var sharedPreferences: SharedPreferences
 
-    protected inline fun <reified T> get(key: String): T? =
+    inline fun <reified T> get(key: String): T? =
         if (sharedPreferences.contains(key)) {
             when (T::class) {
                 Boolean::class -> sharedPreferences.getBoolean(key, false) as T?
@@ -20,7 +20,7 @@ abstract class BaseSharedPreferences {
             null
         }
 
-    protected fun <T> set(key: String, value: T) {
+    fun <T> set(key: String, value: T) {
         sharedPreferences.execute {
             when (value) {
                 is Boolean -> it.putBoolean(key, value)

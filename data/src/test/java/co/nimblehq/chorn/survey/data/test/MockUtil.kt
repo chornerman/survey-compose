@@ -1,5 +1,6 @@
 package co.nimblehq.chorn.survey.data.test
 
+import co.nimblehq.chorn.survey.data.response.BaseErrorResponse
 import co.nimblehq.chorn.survey.data.response.ErrorResponse
 import io.mockk.every
 import io.mockk.mockk
@@ -20,13 +21,23 @@ object MockUtil {
             every { httpException.code() } returns response.code()
             every { httpException.message() } returns response.message()
             every { httpException.response() } returns response
-            every { responseBody.string() } returns "{\n" +
-                    "  \"message\": \"message\"\n" +
-                    "}"
+            every { responseBody.string() } returns """
+{
+  "errors": [
+    {
+      "source": "errorSource",
+      "detail": "errorDetail",
+      "code": "errorCode"
+    }
+  ]
+}
+"""
             return httpException
         }
 
-    val errorResponse = ErrorResponse(
-        message = "message"
+    val baseErrorResponse = BaseErrorResponse(
+        errors = listOf(
+            ErrorResponse(detail = "errorDetail")
+        )
     )
 }

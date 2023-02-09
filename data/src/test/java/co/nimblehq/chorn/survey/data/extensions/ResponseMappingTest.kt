@@ -1,10 +1,10 @@
 package co.nimblehq.chorn.survey.data.extensions
 
-import co.nimblehq.chorn.survey.data.response.toModel
+import co.nimblehq.chorn.survey.data.response.toError
 import co.nimblehq.chorn.survey.data.test.MockUtil
 import co.nimblehq.chorn.survey.domain.exceptions.ApiException
 import co.nimblehq.chorn.survey.domain.exceptions.NoConnectivityException
-import co.nimblehq.chorn.survey.domain.model.Model
+import co.nimblehq.chorn.survey.domain.model.*
 import io.kotest.matchers.shouldBe
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.catch
@@ -21,7 +21,7 @@ class ResponseMappingTest {
     @Test
     fun `When mapping API request flow failed with UnknownHostException, it returns mapped NoConnectivityException error`() =
         runTest {
-            flowTransform<Model> {
+            flowTransform<Token> {
                 throw UnknownHostException()
             }.catch {
                 it shouldBe NoConnectivityException
@@ -31,7 +31,7 @@ class ResponseMappingTest {
     @Test
     fun `When mapping API request flow failed with InterruptedIOException, it returns mapped NoConnectivityException error`() =
         runTest {
-            flowTransform<Model> {
+            flowTransform<Token> {
                 throw InterruptedIOException()
             }.catch {
                 it shouldBe NoConnectivityException
@@ -42,13 +42,12 @@ class ResponseMappingTest {
     fun `When mapping API request flow failed with HttpException, it returns mapped ApiException error`() =
         runTest {
             val httpException = MockUtil.mockHttpException
-            flowTransform<Model> {
+            flowTransform<Token> {
                 throw httpException
             }.catch {
                 it shouldBe ApiException(
-                    MockUtil.errorResponse.toModel(),
-                    httpException.code(),
-                    httpException.message()
+                    MockUtil.baseErrorResponse.toError(),
+                    httpException.code()
                 )
             }.collect()
         }
@@ -57,7 +56,7 @@ class ResponseMappingTest {
     fun `When mapping API request flow failed with unhandled exceptions, it should throw that error`() =
         runTest {
             val exception = IOException("Canceled")
-            flowTransform<Model> {
+            flowTransform<Token> {
                 throw exception
             }.catch {
                 it shouldBe exception
