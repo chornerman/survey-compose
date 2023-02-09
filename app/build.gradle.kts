@@ -1,5 +1,6 @@
 plugins {
     id("com.android.application")
+    id("com.google.gms.google-services")
 
     id("kotlin-android")
     id("kotlin-kapt")
@@ -128,6 +129,8 @@ dependencies {
 
     implementation("com.google.dagger:hilt-android:${Versions.HILT_VERSION}")
     implementation("androidx.hilt:hilt-navigation-compose:${Versions.HILT_NAVIGATION_COMPOSE_VERSION}")
+
+    implementation("com.google.firebase:firebase-bom:${Versions.FIREBASE_BOM_VERSION}")
 
     implementation("com.jakewharton.timber:timber:${Versions.TIMBER_LOG_VERSION}")
 

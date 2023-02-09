@@ -1,17 +1,13 @@
-name: Code analysis and tests
+name: Deploy production
 
 on:
-  pull_request:
-    types: [ opened, synchronize, edited, reopened ]
   push:
-    branches-ignore:
-      - develop
+    branches:
       - main
-      - 'release/**'
 
 jobs:
-  code_analysis_and_tests:
-    name: Code analysis and tests
+  deploy_production_debug:
+    name: Deploy production debug
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
@@ -40,22 +36,20 @@ jobs:
         env:
           SECRET_PASSPHRASE: ${{ secrets.SECRET_PASSPHRASE }}
 
-      - name: Run Detekt
-        run: ./gradlew detekt
-
-      - name: Run Android Lint
-        run: ./gradlew lint
-
-      - name: Run unit tests with Kover
-        run: ./gradlew koverMergedXmlReport
-
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
+      - name: Bump version code
+        uses: chkfung/android-version-actions@v1.2.1
         with:
-          ruby-version: '3.0'
-          bundler-cache: true
+          gradlePath: app/build.gradle.kts
+          versionCode: ${{ github.run_number }}
 
-      - name: Run Danger
-        env:
-          DANGER_GITHUB_API_TOKEN: ${{ secrets.DANGER_GITHUB_API_TOKEN }}
-        run: bundle exec danger
+      - name: Build production debug APK
+        run: ./gradlew assembleProductionDebug
+
+      - name: Upload production debug APK to Firebase
+        uses: wzieba/Firebase-Distribution-Github-Action@v1.4.0
+        with:
+          appId: ${{ secrets.FIREBASE_APP_ID_PRODUCTION }}
+          token: ${{ secrets.FIREBASE_TOKEN }}
+          groups: developer
+          releaseNotes: Production debug build
+          file: app/build/outputs/apk/production/debug/app-production-debug.apk

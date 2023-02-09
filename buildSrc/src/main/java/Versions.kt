@@ -20,6 +20,10 @@ object Versions {
     const val COMPOSE_COMPILER_VERSION = "1.3.2"
     const val COMPOSE_NAVIGATION_VERSION = "2.5.1"
 
+    const val FIREBASE_BOM_VERSION = "31.2.0"
+
+    const val GOOGLE_SERVICES_VERSION = "4.3.15"
+
     const val HILT_VERSION = "2.44"
     const val HILT_NAVIGATION_COMPOSE_VERSION = "1.0.0"
 
