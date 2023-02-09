@@ -34,7 +34,7 @@ jobs:
       - name: Decrypt secret
         run: ./.github/workflows/decrypt_secret.sh
         env:
-          LARGE_SECRET_PASSPHRASE: ${{ secrets.LARGE_SECRET_PASSPHRASE }}
+          SECRET_PASSPHRASE: ${{ secrets.SECRET_PASSPHRASE }}
 
       - name: Bump version code
         uses: chkfung/android-version-actions@v1.2.1
