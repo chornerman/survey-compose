@@ -60,24 +60,41 @@ android {
     productFlavors {
         create(Flavor.STAGING) {
             applicationIdSuffix = ".staging"
+
+            val properties = rootDir.loadGradleProperties("staging.properties")
             buildConfigField(
-                "String", "BASE_API_URL", "\"https://nimble-survey-web-staging.herokuapp.com\""
+                "String",
+                "BASE_API_URL",
+                "\"${properties.getProperty("BASE_API_URL")}\""
             )
             buildConfigField(
-                "String", "CLIENT_ID", "\"z9iUamZLvRgtVVtRJ8UqItg2vmncGyEi30p1eWEddnA\""
+                "String",
+                "CLIENT_ID",
+                "\"${properties.getProperty("CLIENT_ID")}\""
             )
             buildConfigField(
-                "String", "CLIENT_SECRET", "\"1vqRNMxq-Yx83A61GNjLb17qxCGKxHDb8EmB3MKdxqA\""
+                "String",
+                "CLIENT_SECRET",
+                "\"${properties.getProperty("CLIENT_SECRET")}\""
             )
         }
 
         create(Flavor.PRODUCTION) {
-            buildConfigField("String", "BASE_API_URL", "\"https://survey-api.nimblehq.co\"")
+            val properties = rootDir.loadGradleProperties("production.properties")
             buildConfigField(
-                "String", "CLIENT_ID", "\"4gg3bokkvPnMxWz7HHTdM_wf1RNg9k8iA6sZ2ZrA7EA\""
+                "String",
+                "BASE_API_URL",
+                "\"${properties.getProperty("BASE_API_URL")}\""
             )
             buildConfigField(
-                "String", "CLIENT_SECRET", "\"y_GgV-GEjWd3VTzbZBS6tqEco0E68QuqHQv0QND2vKo\""
+                "String",
+                "CLIENT_ID",
+                "\"${properties.getProperty("CLIENT_ID")}\""
+            )
+            buildConfigField(
+                "String",
+                "CLIENT_SECRET",
+                "\"${properties.getProperty("CLIENT_SECRET")}\""
             )
         }
     }
