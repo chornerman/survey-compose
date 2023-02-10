@@ -5,8 +5,7 @@ import co.nimblehq.chorn.survey.data.request.LoginRequest
 import co.nimblehq.chorn.survey.data.response.toToken
 import co.nimblehq.chorn.survey.data.service.AuthService
 import co.nimblehq.chorn.survey.data.service.ApiCredential
-import co.nimblehq.chorn.survey.data.storage.EncryptedSharedPreferences
-import co.nimblehq.chorn.survey.data.storage.SharedPreferenceKeys
+import co.nimblehq.chorn.survey.data.storage.*
 import co.nimblehq.chorn.survey.domain.model.Token
 import co.nimblehq.chorn.survey.domain.repository.AuthRepository
 import kotlinx.coroutines.flow.*
@@ -32,9 +31,9 @@ class AuthRepositoryImpl(
 
     private fun saveTokens(token: Token) {
         sharedPreferences.run {
-            set(SharedPreferenceKeys.ACCESS_TOKEN, token.accessToken)
-            set(SharedPreferenceKeys.REFRESH_TOKEN, token.refreshToken)
-            set(SharedPreferenceKeys.TOKEN_TYPE, token.tokenType)
+            set(ACCESS_TOKEN_PREFERENCES_KEY, token.accessToken)
+            set(REFRESH_TOKEN_PREFERENCES_KEY, token.refreshToken)
+            set(TOKEN_TYPE_PREFERENCES_KEY, token.tokenType)
         }
     }
 }

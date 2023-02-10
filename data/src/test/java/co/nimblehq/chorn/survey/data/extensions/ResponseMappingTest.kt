@@ -46,7 +46,7 @@ class ResponseMappingTest {
                 throw httpException
             }.catch {
                 it shouldBe ApiException(
-                    MockUtil.baseErrorResponse.toError(),
+                    MockUtil.errorResponse.toError(),
                     httpException.code()
                 )
             }.collect()

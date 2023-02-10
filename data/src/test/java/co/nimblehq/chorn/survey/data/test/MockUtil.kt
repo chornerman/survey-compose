@@ -1,7 +1,6 @@
 package co.nimblehq.chorn.survey.data.test
 
-import co.nimblehq.chorn.survey.data.response.BaseErrorResponse
-import co.nimblehq.chorn.survey.data.response.ErrorResponse
+import co.nimblehq.chorn.survey.data.response.*
 import io.mockk.every
 import io.mockk.mockk
 import okhttp3.ResponseBody
@@ -35,9 +34,9 @@ object MockUtil {
             return httpException
         }
 
-    val baseErrorResponse = BaseErrorResponse(
+    val errorResponse = ErrorResponse(
         errors = listOf(
-            ErrorResponse(detail = "errorDetail")
+            ErrorDetailResponse(detail = "errorDetail")
         )
     )
 }

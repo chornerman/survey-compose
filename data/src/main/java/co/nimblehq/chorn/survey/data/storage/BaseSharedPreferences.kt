@@ -2,6 +2,10 @@ package co.nimblehq.chorn.survey.data.storage
 
 import android.content.SharedPreferences
 
+const val ACCESS_TOKEN_PREFERENCES_KEY = "ACCESS_TOKEN"
+const val REFRESH_TOKEN_PREFERENCES_KEY = "REFRESH_TOKEN"
+const val TOKEN_TYPE_PREFERENCES_KEY = "TOKEN_TYPE"
+
 abstract class BaseSharedPreferences {
 
     lateinit var sharedPreferences: SharedPreferences

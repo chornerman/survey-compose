@@ -30,9 +30,9 @@ private fun Throwable.mapError(): Throwable {
         is UnknownHostException,
         is InterruptedIOException -> NoConnectivityException
         is HttpException -> {
-            val baseErrorResponse = parseBaseErrorResponse(response())
+            val errorResponse = parseErrorResponse(response())
             ApiException(
-                baseErrorResponse?.toError(),
+                errorResponse?.toError(),
                 code()
             )
         }
@@ -40,11 +40,11 @@ private fun Throwable.mapError(): Throwable {
     }
 }
 
-private fun parseBaseErrorResponse(response: Response<*>?): BaseErrorResponse? {
+private fun parseErrorResponse(response: Response<*>?): ErrorResponse? {
     val jsonString = response?.errorBody()?.string()
     return try {
         val moshi = MoshiBuilderProvider.moshiBuilder.build()
-        val adapter = moshi.adapter(BaseErrorResponse::class.java)
+        val adapter = moshi.adapter(ErrorResponse::class.java)
         adapter.fromJson(jsonString.orEmpty())
     } catch (exception: IOException) {
         null

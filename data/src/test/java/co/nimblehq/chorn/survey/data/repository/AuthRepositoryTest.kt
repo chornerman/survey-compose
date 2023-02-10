@@ -3,8 +3,7 @@ package co.nimblehq.chorn.survey.data.repository
 import co.nimblehq.chorn.survey.data.response.TokenResponse
 import co.nimblehq.chorn.survey.data.service.AuthService
 import co.nimblehq.chorn.survey.data.service.ApiCredential
-import co.nimblehq.chorn.survey.data.storage.EncryptedSharedPreferences
-import co.nimblehq.chorn.survey.data.storage.SharedPreferenceKeys
+import co.nimblehq.chorn.survey.data.storage.*
 import co.nimblehq.chorn.survey.data.toBaseResponse
 import co.nimblehq.chorn.survey.domain.repository.AuthRepository
 import io.kotest.matchers.shouldBe
@@ -19,9 +18,12 @@ import org.junit.Test
 @ExperimentalCoroutinesApi
 class AuthRepositoryTest {
 
-    private lateinit var mockAuthService: AuthService
-    private lateinit var mockSharedPreferences: EncryptedSharedPreferences
-    private lateinit var apiCredential: ApiCredential
+    private val mockAuthService: AuthService = mockk()
+    private val mockSharedPreferences: EncryptedSharedPreferences = mockk()
+    private val apiCredential: ApiCredential = ApiCredential(
+        clientId = "clientId",
+        clientSecret = "clientSecret"
+    )
     private lateinit var repository: AuthRepository
 
     private val email = "email"
@@ -29,13 +31,11 @@ class AuthRepositoryTest {
 
     @Before
     fun setUp() {
-        mockAuthService = mockk()
-        mockSharedPreferences = mockk()
-        apiCredential = ApiCredential(
-            clientId = "clientId",
-            clientSecret = "clientSecret"
+        repository = AuthRepositoryImpl(
+            authService = mockAuthService,
+            apiCredential = apiCredential,
+            sharedPreferences = mockSharedPreferences
         )
-        repository = AuthRepositoryImpl(mockAuthService, apiCredential, mockSharedPreferences)
 
         every { mockSharedPreferences.set<Any>(any(), any()) } returns Unit
     }
@@ -56,9 +56,9 @@ class AuthRepositoryTest {
         }
         coVerify(exactly = 1) {
             mockSharedPreferences.run {
-                set(SharedPreferenceKeys.ACCESS_TOKEN, tokenResponse.accessToken)
-                set(SharedPreferenceKeys.REFRESH_TOKEN, tokenResponse.refreshToken)
-                set(SharedPreferenceKeys.TOKEN_TYPE, tokenResponse.tokenType)
+                set(ACCESS_TOKEN_PREFERENCES_KEY, tokenResponse.accessToken)
+                set(REFRESH_TOKEN_PREFERENCES_KEY, tokenResponse.refreshToken)
+                set(TOKEN_TYPE_PREFERENCES_KEY, tokenResponse.tokenType)
             }
         }
     }
