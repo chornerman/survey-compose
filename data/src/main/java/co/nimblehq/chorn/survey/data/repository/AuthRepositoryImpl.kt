@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.*
 class AuthRepositoryImpl(
     private val authService: AuthService,
     private val apiCredential: ApiCredential,
-    private val sharedPreferences: EncryptedSharedPreferences
+    private val encryptedSharedPreferences: EncryptedSharedPreferences
 ) : AuthRepository {
 
     override fun login(email: String, password: String): Flow<Unit> = flowTransform {
@@ -30,7 +30,7 @@ class AuthRepositoryImpl(
     }
 
     private fun saveTokens(token: Token) {
-        sharedPreferences.run {
+        encryptedSharedPreferences.run {
             set(ACCESS_TOKEN_PREFERENCES_KEY, token.accessToken)
             set(REFRESH_TOKEN_PREFERENCES_KEY, token.refreshToken)
             set(TOKEN_TYPE_PREFERENCES_KEY, token.tokenType)

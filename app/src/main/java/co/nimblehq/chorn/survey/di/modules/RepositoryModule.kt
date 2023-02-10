@@ -25,7 +25,7 @@ class RepositoryModule {
     fun provideAuthRepository(
         authService: AuthService,
         apiCredential: ApiCredential,
-        sharedPreferences: EncryptedSharedPreferences
+        encryptedSharedPreferences: EncryptedSharedPreferences
     ): AuthRepository =
-        AuthRepositoryImpl(authService, apiCredential, sharedPreferences)
+        AuthRepositoryImpl(authService, apiCredential, encryptedSharedPreferences)
 }

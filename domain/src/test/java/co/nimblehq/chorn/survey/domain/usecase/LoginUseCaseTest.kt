@@ -13,14 +13,13 @@ import org.junit.Test
 @ExperimentalCoroutinesApi
 class LoginUseCaseTest {
 
-    private lateinit var mockAuthRepository: AuthRepository
-    private lateinit var useCase: LoginUseCase
-
+    private val mockAuthRepository: AuthRepository = mockk()
     private val loginInput = LoginInput("email", "password")
+
+    private lateinit var useCase: LoginUseCase
 
     @Before
     fun setUp() {
-        mockAuthRepository = mockk()
         useCase = LoginUseCase(mockAuthRepository)
     }
 

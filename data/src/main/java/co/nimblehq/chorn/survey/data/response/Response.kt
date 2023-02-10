@@ -2,7 +2,7 @@ package co.nimblehq.chorn.survey.data.response
 
 import com.squareup.moshi.Json
 
-data class BaseResponse<T>(
+data class Response<T>(
     @Json(name = "data")
     val data: DataResponse<T>? = null,
 )

@@ -4,7 +4,7 @@ import co.nimblehq.chorn.survey.data.response.TokenResponse
 import co.nimblehq.chorn.survey.data.service.AuthService
 import co.nimblehq.chorn.survey.data.service.ApiCredential
 import co.nimblehq.chorn.survey.data.storage.*
-import co.nimblehq.chorn.survey.data.toBaseResponse
+import co.nimblehq.chorn.survey.data.toResponse
 import co.nimblehq.chorn.survey.domain.repository.AuthRepository
 import io.kotest.matchers.shouldBe
 import io.mockk.*
@@ -19,25 +19,25 @@ import org.junit.Test
 class AuthRepositoryTest {
 
     private val mockAuthService: AuthService = mockk()
-    private val mockSharedPreferences: EncryptedSharedPreferences = mockk()
-    private val apiCredential: ApiCredential = ApiCredential(
+    private val mockEncryptedSharedPreferences: EncryptedSharedPreferences = mockk()
+    private val apiCredential = ApiCredential(
         clientId = "clientId",
         clientSecret = "clientSecret"
     )
-    private lateinit var repository: AuthRepository
-
     private val email = "email"
     private val password = "password"
+
+    private lateinit var repository: AuthRepository
 
     @Before
     fun setUp() {
         repository = AuthRepositoryImpl(
             authService = mockAuthService,
             apiCredential = apiCredential,
-            sharedPreferences = mockSharedPreferences
+            encryptedSharedPreferences = mockEncryptedSharedPreferences
         )
 
-        every { mockSharedPreferences.set<Any>(any(), any()) } returns Unit
+        every { mockEncryptedSharedPreferences.set<Any>(any(), any()) } returns Unit
     }
 
     @Test
@@ -49,13 +49,13 @@ class AuthRepositoryTest {
             refreshToken = "refreshToken",
             createdAt = 0
         )
-        coEvery { mockAuthService.login(any()) } returns tokenResponse.toBaseResponse()
+        coEvery { mockAuthService.login(any()) } returns tokenResponse.toResponse()
 
         repository.login(email, password).collect {
             it shouldBe Unit
         }
         coVerify(exactly = 1) {
-            mockSharedPreferences.run {
+            mockEncryptedSharedPreferences.run {
                 set(ACCESS_TOKEN_PREFERENCES_KEY, tokenResponse.accessToken)
                 set(REFRESH_TOKEN_PREFERENCES_KEY, tokenResponse.refreshToken)
                 set(TOKEN_TYPE_PREFERENCES_KEY, tokenResponse.tokenType)
