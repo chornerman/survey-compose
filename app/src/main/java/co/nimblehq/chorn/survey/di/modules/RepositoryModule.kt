@@ -2,7 +2,7 @@ package co.nimblehq.chorn.survey.di.modules
 
 import co.nimblehq.chorn.survey.BuildConfig
 import co.nimblehq.chorn.survey.data.service.AuthService
-import co.nimblehq.chorn.survey.data.service.ApiCredential
+import co.nimblehq.chorn.survey.data.model.ApiCredential
 import co.nimblehq.chorn.survey.data.storage.EncryptedSharedPreferences
 import co.nimblehq.chorn.survey.data.repository.AuthRepositoryImpl
 import co.nimblehq.chorn.survey.domain.repository.AuthRepository

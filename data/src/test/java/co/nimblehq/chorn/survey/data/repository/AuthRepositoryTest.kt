@@ -2,7 +2,7 @@ package co.nimblehq.chorn.survey.data.repository
 
 import co.nimblehq.chorn.survey.data.response.TokenResponse
 import co.nimblehq.chorn.survey.data.service.AuthService
-import co.nimblehq.chorn.survey.data.service.ApiCredential
+import co.nimblehq.chorn.survey.data.model.ApiCredential
 import co.nimblehq.chorn.survey.data.storage.*
 import co.nimblehq.chorn.survey.data.toResponse
 import co.nimblehq.chorn.survey.domain.repository.AuthRepository

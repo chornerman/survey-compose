@@ -4,7 +4,7 @@ import co.nimblehq.chorn.survey.data.extensions.flowTransform
 import co.nimblehq.chorn.survey.data.request.LoginRequest
 import co.nimblehq.chorn.survey.data.response.toToken
 import co.nimblehq.chorn.survey.data.service.AuthService
-import co.nimblehq.chorn.survey.data.service.ApiCredential
+import co.nimblehq.chorn.survey.data.model.ApiCredential
 import co.nimblehq.chorn.survey.data.storage.*
 import co.nimblehq.chorn.survey.domain.model.Token
 import co.nimblehq.chorn.survey.domain.repository.AuthRepository
