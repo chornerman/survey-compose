@@ -1,10 +1,8 @@
 package co.nimblehq.chorn.survey.di.modules
 
 import co.nimblehq.chorn.survey.BuildConfig
-import co.nimblehq.chorn.survey.data.service.ApiService
-import co.nimblehq.chorn.survey.data.service.providers.ApiServiceProvider
-import co.nimblehq.chorn.survey.data.service.providers.ConverterFactoryProvider
-import co.nimblehq.chorn.survey.data.service.providers.RetrofitProvider
+import co.nimblehq.chorn.survey.data.service.AuthService
+import co.nimblehq.chorn.survey.data.service.providers.*
 import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
@@ -35,6 +33,6 @@ class RetrofitModule {
         .build()
 
     @Provides
-    fun provideApiService(retrofit: Retrofit): ApiService =
-        ApiServiceProvider.getApiService(retrofit)
+    fun provideAuthService(retrofit: Retrofit): AuthService =
+        ApiServiceProvider.getAuthService(retrofit)
 }

@@ -1,7 +1,6 @@
 package co.nimblehq.chorn.survey.data.extensions
 
-import co.nimblehq.chorn.survey.data.response.ErrorResponse
-import co.nimblehq.chorn.survey.data.response.toModel
+import co.nimblehq.chorn.survey.data.response.*
 import co.nimblehq.chorn.survey.data.service.providers.MoshiBuilderProvider
 import co.nimblehq.chorn.survey.domain.exceptions.ApiException
 import co.nimblehq.chorn.survey.domain.exceptions.NoConnectivityException
@@ -33,9 +32,8 @@ private fun Throwable.mapError(): Throwable {
         is HttpException -> {
             val errorResponse = parseErrorResponse(response())
             ApiException(
-                errorResponse?.toModel(),
-                code(),
-                message()
+                errorResponse?.toError(),
+                code()
             )
         }
         else -> this

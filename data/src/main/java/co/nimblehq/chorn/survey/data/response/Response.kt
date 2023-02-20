@@ -1,12 +1,17 @@
 package co.nimblehq.chorn.survey.data.response
 
-import co.nimblehq.chorn.survey.domain.model.Model
 import com.squareup.moshi.Json
 
-data class Response(
-    @Json(name = "id") val id: Int?
+data class Response<T>(
+    @Json(name = "data")
+    val data: DataResponse<T>? = null,
 )
 
-private fun Response.toModel() = Model(id = this.id)
-
-fun List<Response>.toModels() = this.map { it.toModel() }
+data class DataResponse<T>(
+    @Json(name = "id")
+    val id: String? = null,
+    @Json(name = "type")
+    val type: String? = null,
+    @Json(name = "attributes")
+    val attributes: T? = null
+)

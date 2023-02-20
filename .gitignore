@@ -47,3 +47,7 @@ google-services.json
 
 # Keystore
 config/release.keystore
+
+# Credential
+staging.properties
+production.properties

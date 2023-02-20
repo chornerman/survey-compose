@@ -47,14 +47,12 @@ android {
             isShrinkResources = true
             proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
             signingConfig = signingConfigs[BuildType.RELEASE]
-            buildConfigField("String", "BASE_API_URL", "\"https://jsonplaceholder.typicode.com/\"")
         }
 
         getByName(BuildType.DEBUG) {
             // For quickly testing build with proguard, enable this
             isMinifyEnabled = false
             signingConfig = signingConfigs[BuildType.DEBUG]
-            buildConfigField("String", "BASE_API_URL", "\"https://jsonplaceholder.typicode.com/\"")
         }
     }
 
@@ -62,9 +60,43 @@ android {
     productFlavors {
         create(Flavor.STAGING) {
             applicationIdSuffix = ".staging"
+
+            val properties = rootDir.loadGradleProperties("staging.properties")
+            buildConfigField(
+                "String",
+                "BASE_API_URL",
+                "\"${properties.getProperty("BASE_API_URL")}\""
+            )
+            buildConfigField(
+                "String",
+                "CLIENT_ID",
+                "\"${properties.getProperty("CLIENT_ID")}\""
+            )
+            buildConfigField(
+                "String",
+                "CLIENT_SECRET",
+                "\"${properties.getProperty("CLIENT_SECRET")}\""
+            )
         }
 
-        create(Flavor.PRODUCTION) {}
+        create(Flavor.PRODUCTION) {
+            val properties = rootDir.loadGradleProperties("production.properties")
+            buildConfigField(
+                "String",
+                "BASE_API_URL",
+                "\"${properties.getProperty("BASE_API_URL")}\""
+            )
+            buildConfigField(
+                "String",
+                "CLIENT_ID",
+                "\"${properties.getProperty("CLIENT_ID")}\""
+            )
+            buildConfigField(
+                "String",
+                "CLIENT_SECRET",
+                "\"${properties.getProperty("CLIENT_SECRET")}\""
+            )
+        }
     }
 
     sourceSets["test"].resources {
