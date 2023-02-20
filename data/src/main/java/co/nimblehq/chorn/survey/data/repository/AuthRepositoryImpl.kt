@@ -5,6 +5,8 @@ import co.nimblehq.chorn.survey.data.request.LoginRequest
 import co.nimblehq.chorn.survey.data.response.toToken
 import co.nimblehq.chorn.survey.data.service.AuthService
 import co.nimblehq.chorn.survey.data.model.ApiCredential
+import co.nimblehq.chorn.survey.data.request.ResetPasswordRequest
+import co.nimblehq.chorn.survey.data.request.ResetPasswordRequest.*
 import co.nimblehq.chorn.survey.data.storage.*
 import co.nimblehq.chorn.survey.domain.model.Token
 import co.nimblehq.chorn.survey.domain.repository.AuthRepository
@@ -27,6 +29,15 @@ class AuthRepositoryImpl(
         token?.let {
             saveTokens(it)
         } ?: throw Exception("Unable to parse response")
+    }
+
+    override fun resetPassword(email: String): Flow<Unit> = flowTransform {
+        val resetPasswordRequest = ResetPasswordRequest(
+            user = User(email),
+            clientId = apiCredential.clientId,
+            clientSecret = apiCredential.clientSecret
+        )
+        authService.resetPassword(resetPasswordRequest)
     }
 
     private fun saveTokens(token: Token) {
