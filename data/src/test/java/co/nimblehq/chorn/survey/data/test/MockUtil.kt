@@ -20,17 +20,15 @@ object MockUtil {
             every { httpException.code() } returns response.code()
             every { httpException.message() } returns response.message()
             every { httpException.response() } returns response
-            every { responseBody.string() } returns """
-{
-  "errors": [
-    {
-      "source": "errorSource",
-      "detail": "errorDetail",
-      "code": "errorCode"
-    }
-  ]
-}
-"""
+            every { responseBody.string() } returns "{\n" +
+                "  \"errors\": [\n" +
+                "    {\n" +
+                "      \"source\": \"errorSource\",\n" +
+                "      \"detail\": \"errorDetail\",\n" +
+                "      \"code\": \"errorCode\"\n" +
+                "    }\n" +
+                "  ]\n" +
+                "}"
             return httpException
         }
 
