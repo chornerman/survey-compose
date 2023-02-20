@@ -41,7 +41,7 @@ class AuthRepositoryTest {
     }
 
     @Test
-    fun `When calling login successfully, it emits Unit`() = runTest {
+    fun `When calling login successfully, it emits Unit and saves tokens`() = runTest {
         val tokenResponse = TokenResponse(
             accessToken = "accessToken",
             tokenType = "tokenType",
@@ -69,6 +69,25 @@ class AuthRepositoryTest {
         coEvery { mockAuthService.login(any()) } throws expected
 
         repository.login(email, password).catch {
+            it shouldBe expected
+        }.collect()
+    }
+
+    @Test
+    fun `When calling resetPassword successfully, it emits Unit`() = runTest {
+        coEvery { mockAuthService.resetPassword(any()) } returns Unit
+
+        repository.resetPassword(email).collect {
+            it shouldBe Unit
+        }
+    }
+
+    @Test
+    fun `When calling resetPassword failed, it throws the corresponding error`() = runTest {
+        val expected = Throwable()
+        coEvery { mockAuthService.resetPassword(any()) } throws expected
+
+        repository.resetPassword(email).catch {
             it shouldBe expected
         }.collect()
     }
