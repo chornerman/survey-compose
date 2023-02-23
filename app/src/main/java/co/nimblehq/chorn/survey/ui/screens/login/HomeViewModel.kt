@@ -1,4 +1,4 @@
-package co.nimblehq.chorn.survey.ui.screens.home
+package co.nimblehq.chorn.survey.ui.screens.login
 
 import co.nimblehq.chorn.survey.ui.base.BaseViewModel
 import co.nimblehq.chorn.survey.util.DispatchersProvider

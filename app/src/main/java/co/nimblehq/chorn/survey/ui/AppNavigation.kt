@@ -3,7 +3,7 @@ package co.nimblehq.chorn.survey.ui
 import androidx.compose.runtime.Composable
 import androidx.navigation.*
 import androidx.navigation.compose.*
-import co.nimblehq.chorn.survey.ui.screens.home.HomeScreen
+import co.nimblehq.chorn.survey.ui.screens.login.LoginScreen
 
 @Composable
 fun AppNavigation(
@@ -15,7 +15,7 @@ fun AppNavigation(
         startDestination = startDestination
     ) {
         composable(AppDestination.Home) {
-            HomeScreen(
+            LoginScreen(
                 navigator = { destination -> navController.navigate(destination) }
             )
         }
