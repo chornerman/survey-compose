@@ -5,7 +5,7 @@ import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.text.font.*
 import co.nimblehq.chorn.survey.R
 
-val NeuzeitFontFamily = FontFamily(
+private val NeuzeitFontFamily = FontFamily(
     Font(R.font.neuzeit_bold, FontWeight.Bold),
     Font(R.font.neuzeit_regular, FontWeight.Normal)
 )

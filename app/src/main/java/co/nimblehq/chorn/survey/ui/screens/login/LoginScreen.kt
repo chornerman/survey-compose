@@ -72,7 +72,7 @@ private fun LoginScreenContent() {
                     Text(
                         text = stringResource(R.string.login_forgot_password),
                         color = Color.White.copy(alpha = 0.5f),
-                        fontSize = dimensions.textInputTrailingTextSize,
+                        fontSize = dimensions.textInputTrailingFontSize,
                         letterSpacing = 0.sp,
                         modifier = Modifier
                             .padding(end = 16.dp)

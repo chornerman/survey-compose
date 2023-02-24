@@ -19,14 +19,14 @@ fun SubmitButton(
 ) {
     Button(
         onClick = onClick,
-        modifier = modifier.height(dimensions.textInputHeight),
+        modifier = modifier.height(dimensions.submitButtonHeight),
         shape = RoundedCornerShape(dimensions.submitButtonBorderRadius),
         colors = ButtonDefaults.buttonColors(backgroundColor = Color.White)
     ) {
         Text(
             text = text,
             color = ChineseBlack,
-            fontSize = dimensions.submitButtonTextSize,
+            fontSize = dimensions.submitButtonFontSize,
             fontWeight = FontWeight.Bold,
             letterSpacing = 0.sp
         )

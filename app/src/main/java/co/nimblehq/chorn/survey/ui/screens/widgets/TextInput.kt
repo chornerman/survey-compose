@@ -28,7 +28,7 @@ fun TextInput(
         placeholder = {
             Text(
                 text = hintText,
-                fontSize = dimensions.textInputTextSize,
+                fontSize = dimensions.textInputFontSize,
                 color = Color.White.copy(alpha = 0.3f)
             )
         },

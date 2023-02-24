@@ -7,12 +7,12 @@ import androidx.compose.ui.unit.sp
 class AppDimensions {
     val textInputBorderRadius = 10.dp
     val textInputHeight = 56.dp
-    val textInputTextSize = 17.sp
-    val textInputTrailingTextSize = 15.sp
+    val textInputFontSize = 17.sp
+    val textInputTrailingFontSize = 15.sp
 
     val submitButtonBorderRadius = 10.dp
     val submitButtonHeight = 56.dp
-    val submitButtonTextSize = 17.sp
+    val submitButtonFontSize = 17.sp
 }
 
 internal val LocalAppDimensions = staticCompositionLocalOf { AppDimensions() }
