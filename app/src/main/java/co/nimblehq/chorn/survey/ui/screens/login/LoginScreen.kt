@@ -1,5 +1,6 @@
 package co.nimblehq.chorn.survey.ui.screens.login
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -9,6 +10,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.*
@@ -17,21 +19,51 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import co.nimblehq.chorn.survey.R
+import co.nimblehq.chorn.survey.lib.IsLoading
 import co.nimblehq.chorn.survey.ui.AppDestination
 import co.nimblehq.chorn.survey.ui.screens.widgets.*
 import co.nimblehq.chorn.survey.ui.theme.*
 import co.nimblehq.chorn.survey.ui.theme.AppTheme.dimensions
+import co.nimblehq.chorn.survey.ui.userReadableMessage
 
 @Composable
 fun LoginScreen(
-    viewModel: HomeViewModel = hiltViewModel(),
+    viewModel: LoginViewModel = hiltViewModel(),
     navigator: (destination: AppDestination) -> Unit
 ) {
-    LoginScreenContent()
+    val isLoading: IsLoading by viewModel.isLoading.collectAsState()
+
+    val context = LocalContext.current
+    LaunchedEffect(viewModel.error) {
+        viewModel.error.collect { error ->
+            val errorMessage = error.userReadableMessage(context)
+            Toast.makeText(context, errorMessage, Toast.LENGTH_SHORT).show()
+        }
+    }
+    LaunchedEffect(viewModel.invalidInputError) {
+        viewModel.invalidInputError.collect {
+            Toast.makeText(
+                context,
+                context.getString(R.string.login_invalid_email_password),
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+    }
+    LaunchedEffect(viewModel.navigator) {
+        viewModel.navigator.collect { destination -> navigator(destination) }
+    }
+
+    LoginScreenContent(
+        isLoading = isLoading,
+        onLoginButtonClick = viewModel::login
+    )
 }
 
 @Composable
-private fun LoginScreenContent() {
+private fun LoginScreenContent(
+    isLoading: IsLoading,
+    onLoginButtonClick: (String, String) -> Unit
+) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
 
@@ -49,7 +81,7 @@ private fun LoginScreenContent() {
             )
             Spacer(Modifier.height(110.dp))
             TextInput(
-                hintText = stringResource(id = R.string.login_email),
+                hintText = stringResource(R.string.login_email),
                 value = email,
                 onValueChanged = { email = it },
                 modifier = Modifier.fillMaxWidth(),
@@ -86,12 +118,11 @@ private fun LoginScreenContent() {
             Spacer(Modifier.height(20.dp))
             SubmitButton(
                 text = stringResource(R.string.login),
-                onClick = {
-                    // TODO: Call LoginUseCase
-                },
+                onClick = { onLoginButtonClick.invoke(email, password) },
                 modifier = Modifier.fillMaxWidth()
             )
         }
+        LoadingIndicator(shouldShow = isLoading)
     }
 }
 
@@ -99,6 +130,9 @@ private fun LoginScreenContent() {
 @Composable
 private fun LoginScreenPreview() {
     ComposeTheme {
-        LoginScreenContent()
+        LoginScreenContent(
+            isLoading = false,
+            onLoginButtonClick = { _, _ -> }
+        )
     }
 }

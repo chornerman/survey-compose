@@ -7,4 +7,5 @@
     <string name="login_password">Password</string>
     <string name="login_forgot_password">Forgot?</string>
     <string name="login">Log in</string>
+    <string name="login_invalid_email_password">Invalid email or password</string>
 </resources>
