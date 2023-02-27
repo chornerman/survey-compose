@@ -14,9 +14,9 @@ abstract class BaseViewModel(private val dispatchersProvider: DispatchersProvide
 
     private var loadingCount: Int = 0
 
-    private val _showLoading = MutableStateFlow(false)
-    val showLoading: StateFlow<IsLoading>
-        get() = _showLoading
+    private val _isLoading = MutableStateFlow(false)
+    val isLoading: StateFlow<IsLoading>
+        get() = _isLoading
 
     protected val _error = MutableSharedFlow<Throwable>()
     val error: SharedFlow<Throwable>
@@ -31,7 +31,7 @@ abstract class BaseViewModel(private val dispatchersProvider: DispatchersProvide
      */
     protected fun showLoading() {
         if (loadingCount == 0) {
-            _showLoading.value = true
+            _isLoading.value = true
         }
         loadingCount++
     }
@@ -42,12 +42,12 @@ abstract class BaseViewModel(private val dispatchersProvider: DispatchersProvide
     protected fun hideLoading() {
         loadingCount--
         if (loadingCount == 0) {
-            _showLoading.value = false
+            _isLoading.value = false
         }
     }
 
-    fun execute(coroutineDispatcher: CoroutineDispatcher = dispatchersProvider.io, job: suspend () -> Unit) =
-        viewModelScope.launch(coroutineDispatcher) {
-            job.invoke()
-        }
+    fun execute(
+        coroutineDispatcher: CoroutineDispatcher = dispatchersProvider.io,
+        job: suspend () -> Unit
+    ) = viewModelScope.launch(coroutineDispatcher) { job.invoke() }
 }

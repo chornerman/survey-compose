@@ -3,20 +3,35 @@ package co.nimblehq.chorn.survey.ui
 import androidx.compose.runtime.Composable
 import androidx.navigation.*
 import androidx.navigation.compose.*
+import co.nimblehq.chorn.survey.ui.screens.home.HomeScreen
 import co.nimblehq.chorn.survey.ui.screens.login.LoginScreen
 
 @Composable
 fun AppNavigation(
     navController: NavHostController = rememberNavController(),
-    startDestination: String = AppDestination.Home.destination
+    startDestination: String = AppDestination.Login.destination
 ) {
     NavHost(
         navController = navController,
         startDestination = startDestination
     ) {
-        composable(AppDestination.Home) {
+        composable(AppDestination.Login) {
             LoginScreen(
-                navigator = { destination -> navController.navigate(destination) }
+                navigator = { appDestination ->
+                    when (appDestination) {
+                        is AppDestination.Home -> navController.navigate(
+                            appDestination = appDestination,
+                            popUpToDestination = AppDestination.Login.destination
+                        )
+                        else -> navController.navigate(appDestination)
+                    }
+                }
+            )
+        }
+
+        composable(AppDestination.Home) {
+            HomeScreen(
+                navigator = { appDestination -> navController.navigate(appDestination) }
             )
         }
     }
@@ -35,9 +50,16 @@ private fun NavGraphBuilder.composable(
     )
 }
 
-private fun NavHostController.navigate(appDestination: AppDestination) {
+private fun NavHostController.navigate(
+    appDestination: AppDestination,
+    popUpToDestination: String? = null,
+) {
     when (appDestination) {
         is AppDestination.Up -> navigateUp()
-        else -> navigate(route = appDestination.destination)
+        else -> navigate(route = appDestination.destination) {
+            popUpToDestination?.let {
+                popUpTo(it) { inclusive = true }
+            }
+        }
     }
 }
