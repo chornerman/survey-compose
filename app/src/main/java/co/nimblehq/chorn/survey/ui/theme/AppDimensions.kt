@@ -5,6 +5,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 class AppDimensions {
+    val spacingSmall = 8.dp
+    val spacingNormal = 16.dp
+    val spacingLarge = 24.dp
+
     val textInputBorderRadius = 10.dp
     val textInputHeight = 56.dp
     val textInputFontSize = 17.sp

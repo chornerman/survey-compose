@@ -12,9 +12,9 @@ import co.nimblehq.chorn.survey.ui.theme.AppTheme.dimensions
 
 @Composable
 fun TextInput(
+    modifier: Modifier = Modifier,
     value: String,
     onValueChanged: (String) -> Unit,
-    modifier: Modifier = Modifier,
     hintText: String,
     trailingIcon: @Composable (() -> Unit)? = null,
     visualTransformation: VisualTransformation = VisualTransformation.None,
@@ -22,9 +22,9 @@ fun TextInput(
     singleLine: Boolean = true
 ) {
     TextField(
+        modifier = modifier.height(dimensions.textInputHeight),
         value = value,
         onValueChange = onValueChanged,
-        modifier = modifier.height(dimensions.textInputHeight),
         placeholder = {
             Text(
                 text = hintText,

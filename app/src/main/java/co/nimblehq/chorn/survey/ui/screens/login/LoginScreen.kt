@@ -5,6 +5,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Text
+import androidx.compose.material.TextButton
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -40,56 +41,65 @@ private fun LoginScreenContent() {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(top = 120.dp, start = 24.dp, end = 24.dp),
+                .padding(
+                    top = 120.dp,
+                    start = dimensions.spacingLarge,
+                    end = dimensions.spacingLarge
+                ),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Image(
                 painter = painterResource(R.drawable.ic_nimble),
                 contentDescription = null
             )
-            Spacer(Modifier.height(110.dp))
             TextInput(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 110.dp),
                 hintText = stringResource(id = R.string.login_email),
                 value = email,
                 onValueChanged = { email = it },
-                modifier = Modifier.fillMaxWidth(),
-                keyboardOptions = KeyboardOptions.Default.copy(
+                keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Email,
                     imeAction = ImeAction.Next
                 )
             )
-            Spacer(Modifier.height(20.dp))
             TextInput(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 20.dp),
                 hintText = stringResource(R.string.login_password),
                 value = password,
                 onValueChanged = { password = it },
-                modifier = Modifier.fillMaxWidth(),
-                keyboardOptions = KeyboardOptions.Default.copy(
+                keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Password,
                     imeAction = ImeAction.Done
                 ),
                 trailingIcon = {
-                    Text(
-                        text = stringResource(R.string.login_forgot_password),
-                        color = Color.White.copy(alpha = 0.5f),
-                        fontSize = dimensions.textInputTrailingFontSize,
-                        letterSpacing = 0.sp,
-                        modifier = Modifier
-                            .padding(end = 16.dp)
-                            .clickable {
-                                // TODO: Navigate to Reset Password screen
-                            }
-                    )
+                    TextButton(
+                        modifier = Modifier.padding(end = dimensions.spacingSmall),
+                        onClick = {
+                            // TODO: Navigate to Reset Password screen
+                        }
+                    ) {
+                        Text(
+                            text = stringResource(R.string.login_forgot_password),
+                            color = Color.White.copy(alpha = 0.5f),
+                            fontSize = dimensions.textInputTrailingFontSize,
+                            letterSpacing = 0.sp
+                        )
+                    }
                 },
                 visualTransformation = PasswordVisualTransformation()
             )
-            Spacer(Modifier.height(20.dp))
             SubmitButton(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 20.dp),
                 text = stringResource(R.string.login),
                 onClick = {
-                    // TODO: Call LoginUseCase
-                },
-                modifier = Modifier.fillMaxWidth()
+                    // TODO: Call LoginUseCase through ViewModel
+                }
             )
         }
     }

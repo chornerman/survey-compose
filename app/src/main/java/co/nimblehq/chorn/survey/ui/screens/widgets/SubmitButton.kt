@@ -13,13 +13,13 @@ import co.nimblehq.chorn.survey.ui.theme.ChineseBlack
 
 @Composable
 fun SubmitButton(
-    text: String,
-    onClick: () -> Unit,
     modifier: Modifier = Modifier,
+    text: String,
+    onClick: () -> Unit
 ) {
     Button(
-        onClick = onClick,
         modifier = modifier.height(dimensions.submitButtonHeight),
+        onClick = onClick,
         shape = RoundedCornerShape(dimensions.submitButtonBorderRadius),
         colors = ButtonDefaults.buttonColors(backgroundColor = Color.White)
     ) {
