@@ -1,7 +1,6 @@
 package co.nimblehq.chorn.survey.ui.screens.widgets
 
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
@@ -9,6 +8,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.VisualTransformation
 import co.nimblehq.chorn.survey.ui.theme.AppTheme.dimensions
+import co.nimblehq.chorn.survey.ui.theme.AppTheme.shapes
+import co.nimblehq.chorn.survey.ui.theme.AppTheme.styles
 
 @Composable
 fun TextInput(
@@ -22,14 +23,13 @@ fun TextInput(
     singleLine: Boolean = true
 ) {
     TextField(
-        modifier = modifier.height(dimensions.textInputHeight),
+        modifier = modifier.height(dimensions.dp56),
         value = value,
         onValueChange = onValueChanged,
         placeholder = {
             Text(
-                text = hintText,
-                fontSize = dimensions.textInputFontSize,
-                color = Color.White.copy(alpha = 0.3f)
+                style = styles.whiteAlpha3Normal17Text,
+                text = hintText
             )
         },
         trailingIcon = trailingIcon,
@@ -43,6 +43,6 @@ fun TextInput(
             unfocusedIndicatorColor = Color.Transparent,
             cursorColor = Color.White
         ),
-        shape = RoundedCornerShape(dimensions.textInputBorderRadius)
+        shape = shapes.medium
     )
 }

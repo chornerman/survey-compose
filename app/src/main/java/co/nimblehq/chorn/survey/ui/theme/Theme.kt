@@ -14,7 +14,6 @@ fun ComposeTheme(
     } else {
         LightColorPalette
     }
-    val typography = LocalAppTypography.current
     val shapes = LocalAppShapes.current
 
     CompositionLocalProvider(
@@ -22,7 +21,6 @@ fun ComposeTheme(
     ) {
         MaterialTheme(
             colors = colors.themeColors,
-            typography = typography,
             shapes = shapes,
             content = content
         )
@@ -39,11 +37,6 @@ object AppTheme {
         @Composable
         @ReadOnlyComposable
         get() = LocalAppColors.current
-
-    val typography: Typography
-        @Composable
-        @ReadOnlyComposable
-        get() = LocalAppTypography.current
 
     val shapes: Shapes
         @Composable
