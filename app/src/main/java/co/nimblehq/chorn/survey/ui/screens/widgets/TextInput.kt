@@ -37,12 +37,12 @@ fun TextInput(
         keyboardOptions = keyboardOptions,
         singleLine = singleLine,
         colors = TextFieldDefaults.textFieldColors(
-            textColor = Color.White,
             backgroundColor = Color.White.copy(alpha = 0.2f),
             focusedIndicatorColor = Color.Transparent,
             unfocusedIndicatorColor = Color.Transparent,
             cursorColor = Color.White
         ),
-        shape = shapes.medium
+        shape = shapes.medium,
+        textStyle = styles.whiteNormal17Text
     )
 }

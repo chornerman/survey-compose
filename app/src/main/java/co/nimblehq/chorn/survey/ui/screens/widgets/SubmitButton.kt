@@ -7,7 +7,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import co.nimblehq.chorn.survey.ui.theme.AppTheme.dimensions
 import co.nimblehq.chorn.survey.ui.theme.AppTheme.shapes
-import co.nimblehq.chorn.survey.ui.theme.AppTheme.styles
 
 @Composable
 fun SubmitButton(
@@ -21,9 +20,6 @@ fun SubmitButton(
         shape = shapes.medium,
         colors = ButtonDefaults.buttonColors(backgroundColor = Color.White)
     ) {
-        Text(
-            style = styles.chineseBlackBold17Text,
-            text = text
-        )
+        Text(text = text)
     }
 }
