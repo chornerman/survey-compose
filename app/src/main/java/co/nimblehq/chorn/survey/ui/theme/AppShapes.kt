@@ -1,10 +1,12 @@
 package co.nimblehq.chorn.survey.ui.theme
 
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Shapes
 import androidx.compose.runtime.staticCompositionLocalOf
+import androidx.compose.ui.unit.dp
 
 private val Shapes = Shapes(
-    // Custom shapes here
+    medium = RoundedCornerShape(10.dp)
 )
 
 internal val LocalAppShapes = staticCompositionLocalOf { Shapes }
